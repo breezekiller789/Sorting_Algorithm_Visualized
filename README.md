@@ -28,6 +28,11 @@ pip install -r requirements.txt
 ```
 git clone https://github.com/breezekiller789/Sorting_Algorithm_Visualized.git
 ```
+### Run
+
+```
+python3 Sorting_Algo_Visualized.py
+```
 
 ## Author
 
