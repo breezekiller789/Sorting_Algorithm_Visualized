@@ -2,8 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import pygame
-import Algorithms
 import PyGameUtils
+from Algorithms.Algorithms import (
+    InsertionSort,
+    SelectionSort,
+    BubbleSort,
+    QuickSort,
+    MergeSort
+)
 
 
 def main():
@@ -17,22 +23,22 @@ def main():
                 running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    Algorithms.Generate_Array()
+                    PyGameUtils.Generate_Array()
                 if event.key == pygame.K_m:    # Do merge sort
                     PyGameUtils.algorithm = "MergeSort"
-                    Algorithms.MergeSort(1, PyGameUtils.Array_Size)
+                    MergeSort(1, PyGameUtils.Array_Size)
                 if event.key == pygame.K_b:
                     PyGameUtils.algorithm = "BubbleSort"
-                    Algorithms.BubbleSort()
+                    BubbleSort()
                 if event.key == pygame.K_s:
                     PyGameUtils.algorithm = "SelectionSort"
-                    Algorithms.SelectionSort()
+                    SelectionSort()
                 if event.key == pygame.K_i:
                     PyGameUtils.algorithm = "InsertionSort"
-                    Algorithms.InsertionSort()
+                    InsertionSort()
                 if event.key == pygame.K_q:
                     PyGameUtils.algorithm = "QuickSort"
-                    Algorithms.QuickSort(1, PyGameUtils.Array_Size)
+                    QuickSort(1, PyGameUtils.Array_Size)
 
         if text is not None:
             PyGameUtils.screen.blit(text, (370, 300))

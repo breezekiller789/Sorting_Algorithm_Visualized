@@ -61,7 +61,7 @@ def Draw():
     nav5 = fnt1.render("q: QuickSort.", True, (0, 0, 0))
     space_to_stop = fnt1.render("<space> to stop", True, (0, 0, 0))
     recreate = fnt1.render("<r> to recreate array", True, (0, 0, 0))
-    Algo_Info = fnt1.render("Algorithm"+algorithm, True, (0, 0, 0))
+    Algo_Info = fnt1.render("Algorithm: "+algorithm, True, (0, 0, 0))
 
     # 貼上螢幕。
     screen.blit(nav1, (20, 10))

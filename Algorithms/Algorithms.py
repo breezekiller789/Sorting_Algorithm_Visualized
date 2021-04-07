@@ -3,7 +3,9 @@
 
 from PyGameUtils import *
 
+# To end recursion when user wanted to pause the program
 END = -1
+
 
 def QuickSort(p, n):
     if p < n:
