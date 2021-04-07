@@ -15,7 +15,6 @@ from Algorithms.Algorithms import (
 def main():
     PyGameUtils.Generate_Array()
     running = True
-    text = None
     while running:
         PyGameUtils.screen.fill((255, 255, 255))
         for event in pygame.event.get():
@@ -39,9 +38,6 @@ def main():
                 if event.key == pygame.K_q:
                     PyGameUtils.algorithm = "QuickSort"
                     QuickSort(1, PyGameUtils.Array_Size)
-
-        if text is not None:
-            PyGameUtils.screen.blit(text, (370, 300))
 
         PyGameUtils.Draw()
         pygame.display.update()
