@@ -33,8 +33,3 @@ git clone https://github.com/breezekiller789/Sorting_Algorithm_Visualized.git
 
 * **Willy Huang** - *Initial work*
 
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
