@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from PyGameUtils import *
+from PyGameUtils import PyGameUtils
+from PyGameUtils import Colors
+import pygame
 
 # To end recursion when user wanted to pause the program
 END = -1
 
+Array_Size = 150    # 總共150筆資料
+Array_Color = [Colors.Green] * (Array_Size+1)   # 每筆資料顏色先給綠色
+Array = [0] * (Array_Size+1)        # 一百五十筆資料，初始先給0
 
+
+# quick sort，用遞迴解。
 def QuickSort(p, n):
     if p < n:
         q = Partition(p, n)
@@ -21,14 +28,14 @@ def QuickSort(p, n):
 def Partition(p, n):
     Pivot = Array[n]
     i = p - 1
-    Array_Color[n] = Colors[2]
+    Array_Color[n] = Colors.Black
     for j in range(p, n+1):
         pygame.event.pump()
-        Array_Color[i] = Colors[1]
-        Array_Color[j] = Colors[1]
-        Refresh_Page()
-        Array_Color[i] = Colors[0]
-        Array_Color[j] = Colors[0]
+        Array_Color[i] = Colors.Red     # 正在比較的兩筆換成紅色
+        Array_Color[j] = Colors.Red     # 正在比較的兩筆換成紅色
+        PyGameUtils.Refresh_Page()
+        Array_Color[i] = Colors.Green   # 換回來
+        Array_Color[j] = Colors.Green   # 換回來
         if Array[j] < Pivot:
             i += 1
             tmp = Array[j]
@@ -47,6 +54,7 @@ def Partition(p, n):
     return i
 
 
+# Merge sort遞迴解
 def MergeSort(l, r):
     mid = (l+r)//2
     if l < r:
@@ -65,11 +73,11 @@ def Merge(l, x1, x2, r):
     temp = []
     while i <= x1 and j <= r:
         pygame.event.pump()
-        Array_Color[i] = Colors[1]
-        Array_Color[j] = Colors[1]
-        Refresh_Page()
-        Array_Color[i] = Colors[0]
-        Array_Color[j] = Colors[0]
+        Array_Color[i] = Colors.Red         # 正在比較的兩筆換成紅色
+        Array_Color[j] = Colors.Red         # 正在比較的兩筆換成紅色
+        PyGameUtils.Refresh_Page()
+        Array_Color[i] = Colors.Green       # 換回來
+        Array_Color[j] = Colors.Green       # 換回來
         if Array[i] < Array[j]:
             temp.append(Array[i])
             i += 1
@@ -82,41 +90,33 @@ def Merge(l, x1, x2, r):
                 if event.key == pygame.K_SPACE:
                     return END
 
+    # 可能左半邊還有剩下，直接全部append到temp
     while i <= x1:
         pygame.event.pump()
-        Array_Color[i] = Colors[1]
-        Refresh_Page()
-        Array_Color[i] = Colors[0]
+        Array_Color[i] = Colors.Red
+        PyGameUtils.Refresh_Page()
+        Array_Color[i] = Colors.Green
         temp.append(Array[i])
         i += 1
-        # 讓使用者可以中途暫停
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    return END
 
+    # 可能右半邊還有剩下，直接全部append到temp
     while j <= r:
         pygame.event.pump()
-        Array_Color[j] = Colors[1]
-        Refresh_Page()
-        Array_Color[j] = Colors[0]
+        Array_Color[j] = Colors.Red
+        PyGameUtils.Refresh_Page()
+        Array_Color[j] = Colors.Green
         temp.append(Array[j])
         j += 1
-        # 讓使用者可以中途暫停
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    return END
 
-    # 排好的東西都先放到temp裡頭，待會再一次印出來。
+    # 走到這裡代表全部都排好放在temp，現在就是進去把它印出來。
     i = 0
     for idx in range(l, r+1):
         pygame.event.pump()
         Array[idx] = temp[i]
         i += 1
-        Array_Color[idx] = Colors[2]
-        Refresh_Page()
-        Array_Color[idx] = Colors[0]
+        Array_Color[idx] = Colors.Black
+        PyGameUtils.Refresh_Page()
+        Array_Color[idx] = Colors.Green
         # 讓使用者可以中途暫停
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -128,9 +128,9 @@ def BubbleSort():
     for i in range(1, Array_Size+1):
         for j in range(1, Array_Size+1-i):
             pygame.event.pump()
-            Array_Color[j] = Colors[1]      # 把目前位置標記起來，用紅色標起來
-            Refresh_Page()                  # 畫面重刷
-            Array_Color[j] = Colors[0]      # 顏色換回來
+            Array_Color[j] = Colors.Red     # 把目前位置標記起來，用紅色標起來
+            PyGameUtils.Refresh_Page()      # 畫面重刷
+            Array_Color[j] = Colors.Green   # 顏色換回來
             if Array[j+1] > Array[j]:
                 tmp = Array[j+1]
                 Array[j+1] = Array[j]
@@ -147,9 +147,9 @@ def SelectionSort():
         Min_Index = i
         for j in range(i+1, Array_Size+1):
             pygame.event.pump()
-            Array_Color[j] = Colors[1]      # 把目前位置標記起來，用紅色標起來
-            Refresh_Page()                  # 畫面重刷
-            Array_Color[j] = Colors[0]      # 顏色換回來
+            Array_Color[j] = Colors.Red     # 把目前位置標記起來，用紅色標起來
+            PyGameUtils.Refresh_Page()      # 畫面重刷
+            Array_Color[j] = Colors.Green   # 顏色換回來
             # 這邊的邏輯跟原本的不一樣，因為陣列是倒著放的，所以大跟小要反過來。
             if Array[j] < Array[Min_Index]:
                 Min_Index = j
@@ -168,15 +168,15 @@ def SelectionSort():
 def InsertionSort():
     for i in range(2, Array_Size+1):
         key = Array[i]
-        Array_Color[i] = Colors[1]
+        Array_Color[i] = Colors.Red
         j = i-1
         while j > 0 and key < Array[j]:
             pygame.event.pump()
-            Array_Color[j] = Colors[1]
-            Refresh_Page()
-            Array_Color[i] = Colors[0]
-            Array_Color[j] = Colors[0]
-            Array[j+1] = Array[j]
+            Array_Color[j] = Colors.Red
+            PyGameUtils.Refresh_Page()
+            Array_Color[i] = Colors.Green
+            Array_Color[j] = Colors.Green
+            Array[j+1] = Array[j]       # Insert!!
             j -= 1
             # 讓使用者可以中途暫停
             for event in pygame.event.get():

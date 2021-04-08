@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pygame
-import PyGameUtils
+from PyGameUtils import PyGameUtils
 from Algorithms.Algorithms import (
     InsertionSort,
     SelectionSort,
@@ -10,6 +10,7 @@ from Algorithms.Algorithms import (
     QuickSort,
     MergeSort
 )
+from Algorithms.Algorithms import Array_Size
 
 
 def main():
@@ -25,7 +26,7 @@ def main():
                     PyGameUtils.Generate_Array()
                 if event.key == pygame.K_m:    # Do merge sort
                     PyGameUtils.algorithm = "MergeSort"
-                    MergeSort(1, PyGameUtils.Array_Size)
+                    MergeSort(1, Array_Size)
                 if event.key == pygame.K_b:
                     PyGameUtils.algorithm = "BubbleSort"
                     BubbleSort()
@@ -37,7 +38,7 @@ def main():
                     InsertionSort()
                 if event.key == pygame.K_q:
                     PyGameUtils.algorithm = "QuickSort"
-                    QuickSort(1, PyGameUtils.Array_Size)
+                    QuickSort(1, Array_Size)
 
         PyGameUtils.Draw()
         pygame.display.update()
