@@ -52,6 +52,7 @@ def Draw():
     nav4 = Fonts.FontTitleSmall.render("m: MergeSort.", True, (0, 0, 0))
     nav5 = Fonts.FontTitleSmall.render("q: QuickSort.", True, (0, 0, 0))
     nav6 = Fonts.FontTitleSmall.render("c: CountingSort.", True, (0, 0, 0))
+    nav7 = Fonts.FontTitleSmall.render("h: ShellSort.", True, (0, 0, 0))
 
     space_to_stop = Fonts.FontTitleSmall.render(
         "<space> to stop", True, (0, 0, 0))
@@ -59,7 +60,7 @@ def Draw():
     recreate = Fonts.FontTitleSmall.render(
         "<r> to recreate array", True, (0, 0, 0))
 
-    Algo_Info = Fonts.FontTitleSmall.render(
+    Algo_Info = Fonts.FontTitleBig.render(
         "Algorithm: "+algorithm, True, (0, 0, 0))
 
     # 貼上螢幕。
@@ -69,9 +70,10 @@ def Draw():
     screen.blit(nav4, (200, 10))
     screen.blit(nav5, (200, 40))
     screen.blit(nav6, (200, 70))
-    screen.blit(Algo_Info, (600, 40))
-    screen.blit(recreate, (600, 70))
-    screen.blit(space_to_stop, (600, 10))
+    screen.blit(nav7, (400, 10))
+    screen.blit(space_to_stop, (700, 10))
+    screen.blit(recreate, (700, 40))
+    screen.blit(Algo_Info, (700, 60))
 
     Boundry_Width = int(Width/Algo.Array_Size)       # 每一個小格子的寬
     # Boundry_Height = int(Height/Array_Size)       # 每一個小格子的寬
