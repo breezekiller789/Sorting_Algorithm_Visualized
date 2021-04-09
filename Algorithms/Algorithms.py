@@ -6,13 +6,13 @@ from PyGameUtils import PyGameUtils
 from PyGameUtils import Colors
 import pygame
 
-
 # To end recursion when user wanted to pause the program
 END = -1
 
-Array_Size = 150    # 總共150筆資料
+
+Array_Size = 150                                # 總共150筆資料
 Array_Color = [Colors.Green] * (Array_Size+1)   # 每筆資料顏色先給綠色
-Array = [0] * (Array_Size+1)        # 一百五十筆資料，初始先給0
+Array = [0] * (Array_Size+1)                    # 一百五十筆資料，初始先給0
 
 
 def Swap(i, j):
@@ -21,7 +21,7 @@ def Swap(i, j):
     Array[j] = tmp
 
 
-def Check_Event_Queue():
+def Event_Queue():
     # 讓使用者可以中途暫停
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -49,7 +49,7 @@ def ShellSort():
                     Swap(i, i+Span)
                     Have_Swapped = True
                 i += 1
-                if Check_Event_Queue():
+                if Event_Queue():
                     return
             Have_Swapped = not Have_Swapped
 
@@ -67,7 +67,7 @@ def CountingSort():
         PyGameUtils.Refresh_Page()
         Count[Array[idx]] += 1
         Array_Color[idx] = Colors.Green
-        if Check_Event_Queue():
+        if Event_Queue():
             return
 
     Start[0] = 0
@@ -75,22 +75,27 @@ def CountingSort():
     for idx in range(1, Range):
         Start[idx] = Start[idx-1] + Count[idx-1]
 
+    # 從頭開始先拿鍵值，再去Start查表，看這個鍵值的起始位置在哪，就放在那邊，而
+    # 這邊會用Output去接起來是因為，如果放回去原始Array的話全部都會被打亂，所以
+    # 必須要先放在Output，這個迴圈做完就會是排序好的。
     for idx, num in enumerate(Array):
         pygame.event.pump()
         Output[Start[num]] = num
         Start[num] += 1
 
+    # 把剛剛的Output放回去Array然後印出來
     for idx, num in enumerate(Output):
         pygame.event.pump()
         Array_Color[idx] = Colors.Red
         PyGameUtils.Refresh_Page()
         Array_Color[idx] = Colors.Green
         Array[idx] = num
-        if Check_Event_Queue():
+        if Event_Queue():
             return
 
 
-# quick sort，用遞迴解。
+# quick sort，用遞迴解，會有if ... return END 是因為必須要讓使用者可以在中途暫停
+# 一旦暫停就必須要一路回傳回去，所以才會這樣寫，不然其實不用這麼麻煩。
 def QuickSort(p, n):
     if p < n:
         q = Partition(p, n)
@@ -102,6 +107,8 @@ def QuickSort(p, n):
             return END
 
 
+# i走在j後面，j會一直往後走，一旦j遇到比pivot小的，就讓i往後走一步，然後i, j對調
+# Ref: 資料結構Quick Sort
 def Partition(p, n):
     Pivot = Array[n]
     i = p - 1
@@ -116,15 +123,15 @@ def Partition(p, n):
         if Array[j] < Pivot:
             i += 1
             Swap(i, j)
-            # tmp = Array[j]
-            # Array[j] = Array[i]
-            # Array[i] = tmp
-        # 讓使用者可以中途暫停
+
+        # 讓使用者可以中途暫停，這邊因為是遞迴，所以必須一直回傳END回去，這樣
+        # 才會一直往回
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     return END
 
+    # 走到最後還要把pivot插回去，並且回傳插入的位置。
     i += 1
     tmp = Array[i]
     Array[i] = Array[n]
@@ -214,7 +221,7 @@ def BubbleSort():
                 # tmp = Array[j+1]
                 # Array[j+1] = Array[j]
                 # Array[j] = tmp
-            if Check_Event_Queue():
+            if Event_Queue():
                 return
 
 
@@ -230,7 +237,7 @@ def SelectionSort():
             if Array[j] < Array[Min_Index]:
                 Min_Index = j
 
-            if Check_Event_Queue():
+            if Event_Queue():
                 return
 
         if i != Min_Index:
@@ -248,8 +255,8 @@ def InsertionSort():
             PyGameUtils.Refresh_Page()
             Array_Color[i] = Colors.Green
             Array_Color[j] = Colors.Green
-            Array[j+1] = Array[j]       # Insert!!
+            Array[j+1] = Array[j]           # Insert!!
             j -= 1
-            if Check_Event_Queue():
+            if Event_Queue():
                 return
         Array[j+1] = key
