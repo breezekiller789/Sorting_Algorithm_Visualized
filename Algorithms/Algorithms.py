@@ -51,7 +51,7 @@ def ShellSort():
                 i += 1
                 if Event_Queue():
                     return
-            Have_Swapped = not Have_Swapped
+            Have_Swapped = not Have_Swapped     # 每一回合必須要做到完全沒有Swap
 
 
 def CountingSort():
