@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import math
 from PyGameUtils import PyGameUtils
 from PyGameUtils import Colors
 import pygame
+
 
 # To end recursion when user wanted to pause the program
 END = -1
@@ -11,6 +13,81 @@ END = -1
 Array_Size = 150    # 總共150筆資料
 Array_Color = [Colors.Green] * (Array_Size+1)   # 每筆資料顏色先給綠色
 Array = [0] * (Array_Size+1)        # 一百五十筆資料，初始先給0
+
+
+def Swap(i, j):
+    tmp = Array[i]
+    Array[i] = Array[j]
+    Array[j] = tmp
+
+
+def Check_Event_Queue():
+    # 讓使用者可以中途暫停
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                return True
+
+
+def ShellSort():
+    Span = Array_Size
+    Divider = 2
+    while Span > 1:
+        Span = math.ceil(Span / Divider)
+        Have_Swapped = False
+        while not Have_Swapped:
+            i = 1
+            Have_Swapped = False
+            while i+Span < Array_Size+1:
+                pygame.event.pump()
+                Array_Color[i] = Colors.Red
+                Array_Color[i+Span] = Colors.Red
+                PyGameUtils.Refresh_Page()
+                Array_Color[i] = Colors.Green
+                Array_Color[i+Span] = Colors.Green
+                if Array[i] > Array[i+Span]:
+                    Swap(i, i+Span)
+                    Have_Swapped = True
+                i += 1
+                if Check_Event_Queue():
+                    return
+            Have_Swapped = not Have_Swapped
+
+
+def CountingSort():
+    Range = PyGameUtils.Key_Range
+    Output = [0 for i in range(Array_Size+1)]
+    Start = [0 for i in range(Range+1)]
+    Count = [0 for i in range(Range+1)]
+
+    # 先算出每一個值的個數有多少個
+    for idx in range(Array_Size+1):
+        pygame.event.pump()
+        Array_Color[idx] = Colors.Red
+        PyGameUtils.Refresh_Page()
+        Count[Array[idx]] += 1
+        Array_Color[idx] = Colors.Green
+        if Check_Event_Queue():
+            return
+
+    Start[0] = 0
+    # 算每一個鍵值的擺放起始位置。
+    for idx in range(1, Range):
+        Start[idx] = Start[idx-1] + Count[idx-1]
+
+    for idx, num in enumerate(Array):
+        pygame.event.pump()
+        Output[Start[num]] = num
+        Start[num] += 1
+
+    for idx, num in enumerate(Output):
+        pygame.event.pump()
+        Array_Color[idx] = Colors.Red
+        PyGameUtils.Refresh_Page()
+        Array_Color[idx] = Colors.Green
+        Array[idx] = num
+        if Check_Event_Queue():
+            return
 
 
 # quick sort，用遞迴解。
@@ -38,9 +115,10 @@ def Partition(p, n):
         Array_Color[j] = Colors.Green   # 換回來
         if Array[j] < Pivot:
             i += 1
-            tmp = Array[j]
-            Array[j] = Array[i]
-            Array[i] = tmp
+            Swap(i, j)
+            # tmp = Array[j]
+            # Array[j] = Array[i]
+            # Array[i] = tmp
         # 讓使用者可以中途暫停
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -132,14 +210,12 @@ def BubbleSort():
             PyGameUtils.Refresh_Page()      # 畫面重刷
             Array_Color[j] = Colors.Green   # 顏色換回來
             if Array[j+1] > Array[j]:
-                tmp = Array[j+1]
-                Array[j+1] = Array[j]
-                Array[j] = tmp
-            # 讓使用者可以中途暫停
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        return
+                Swap(j+1, j)
+                # tmp = Array[j+1]
+                # Array[j+1] = Array[j]
+                # Array[j] = tmp
+            if Check_Event_Queue():
+                return
 
 
 def SelectionSort():
@@ -153,16 +229,12 @@ def SelectionSort():
             # 這邊的邏輯跟原本的不一樣，因為陣列是倒著放的，所以大跟小要反過來。
             if Array[j] < Array[Min_Index]:
                 Min_Index = j
-            # 讓使用者可以中途暫停
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        return
+
+            if Check_Event_Queue():
+                return
 
         if i != Min_Index:
-            tmp = Array[i]
-            Array[i] = Array[Min_Index]
-            Array[Min_Index] = tmp
+            Swap(i, Min_Index)
 
 
 def InsertionSort():
@@ -178,9 +250,6 @@ def InsertionSort():
             Array_Color[j] = Colors.Green
             Array[j+1] = Array[j]       # Insert!!
             j -= 1
-            # 讓使用者可以中途暫停
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        return
+            if Check_Event_Queue():
+                return
         Array[j+1] = key

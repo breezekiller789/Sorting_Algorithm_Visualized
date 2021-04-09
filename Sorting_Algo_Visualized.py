@@ -8,7 +8,9 @@ from Algorithms.Algorithms import (
     SelectionSort,
     BubbleSort,
     QuickSort,
-    MergeSort
+    MergeSort,
+    CountingSort,
+    ShellSort
 )
 from Algorithms.Algorithms import Array_Size
 
@@ -39,6 +41,12 @@ def main():
                 if event.key == pygame.K_q:
                     PyGameUtils.algorithm = "QuickSort"
                     QuickSort(1, Array_Size)
+                if event.key == pygame.K_c:
+                    PyGameUtils.algorithm = "CountingSort"
+                    CountingSort()
+                if event.key == pygame.K_h:
+                    PyGameUtils.algorithm = "ShellSort"
+                    ShellSort()
 
         PyGameUtils.Draw()
         pygame.display.update()

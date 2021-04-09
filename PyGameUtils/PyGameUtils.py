@@ -51,6 +51,7 @@ def Draw():
     nav3 = Fonts.FontTitleSmall.render("b: BubbleSort.", True, (0, 0, 0))
     nav4 = Fonts.FontTitleSmall.render("m: MergeSort.", True, (0, 0, 0))
     nav5 = Fonts.FontTitleSmall.render("q: QuickSort.", True, (0, 0, 0))
+    nav6 = Fonts.FontTitleSmall.render("c: CountingSort.", True, (0, 0, 0))
 
     space_to_stop = Fonts.FontTitleSmall.render(
         "<space> to stop", True, (0, 0, 0))
@@ -67,6 +68,7 @@ def Draw():
     screen.blit(nav3, (20, 70))
     screen.blit(nav4, (200, 10))
     screen.blit(nav5, (200, 40))
+    screen.blit(nav6, (200, 70))
     screen.blit(Algo_Info, (600, 40))
     screen.blit(recreate, (600, 70))
     screen.blit(space_to_stop, (600, 10))
@@ -91,3 +93,12 @@ def Draw():
             ((i-1)*Boundry_Width, 106),
             ((i-1)*Boundry_Width, 106+Algo.Array[i]*Boundry_Width),
             Boundry_Width)
+
+
+def GetDigits():
+    Digits = 0
+    key_range = Key_Range
+    while key_range / 10 > 0:
+        key_range = key_range // 10
+        Digits += 1
+    return Digits
