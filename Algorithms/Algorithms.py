@@ -46,6 +46,11 @@ def ShellSort():
                 Array_Color[i] = Colors.Green
                 Array_Color[i+Span] = Colors.Green
                 if Array[i] > Array[i+Span]:
+                    Array_Color[i] = Colors.Black
+                    Array_Color[i+Span] = Colors.Black
+                    PyGameUtils.Refresh_Page()
+                    Array_Color[i] = Colors.Green
+                    Array_Color[i+Span] = Colors.Green
                     Swap(i, i+Span)
                     Have_Swapped = True
                 i += 1
@@ -110,9 +115,14 @@ def QuickSort(p, n):
 # i走在j後面，j會一直往後走，一旦j遇到比pivot小的，就讓i往後走一步，然後i, j對調
 # Ref: 資料結構Quick Sort
 def Partition(p, n):
-    Pivot = Array[n]
+    if p-n >= 2:
+        idx = Middle_Of_Three(p, n)         # 避免worst case飆到n^2
+        Pivot = Array[idx]
+        Array_Color[idx] = Colors.Black
+    else:
+        Pivot = Array[n]
+        Array_Color[n] = Colors.Black
     i = p - 1
-    Array_Color[n] = Colors.Black
     for j in range(p, n+1):
         pygame.event.pump()
         Array_Color[i] = Colors.Red     # 正在比較的兩筆換成紅色
@@ -137,6 +147,12 @@ def Partition(p, n):
     Array[i] = Array[n]
     Array[n] = tmp
     return i
+
+
+def Middle_Of_Three(p, n):
+    middle = (p+n)//2
+    three = [Array[p], Array[n], Array[middle]]
+    return sorted(three)[1]
 
 
 # Merge sort遞迴解

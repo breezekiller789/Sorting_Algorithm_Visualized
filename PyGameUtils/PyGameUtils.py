@@ -73,7 +73,7 @@ def Draw():
     screen.blit(nav7, (400, 10))
     screen.blit(space_to_stop, (700, 10))
     screen.blit(recreate, (700, 40))
-    screen.blit(Algo_Info, (700, 60))
+    screen.blit(Algo_Info, (600, 60))
 
     Boundry_Width = int(Width/Algo.Array_Size)       # 每一個小格子的寬
     # Boundry_Height = int(Height/Array_Size)       # 每一個小格子的寬
