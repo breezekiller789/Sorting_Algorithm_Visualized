@@ -9,7 +9,6 @@ import pygame
 # To end recursion when user wanted to pause the program
 END = -1
 
-
 Array_Size = 150                                # 總共150筆資料
 Array_Color = [Colors.Green] * (Array_Size+1)   # 每筆資料顏色先給綠色
 Array = [0] * (Array_Size+1)                    # 一百五十筆資料，初始先給0

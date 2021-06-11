@@ -16,7 +16,7 @@ algorithm = ""
 screen = pygame.display.set_mode((Width, Height))   # 初始化螢幕
 
 # 設定標題
-pygame.display.set_caption("Merge Sort")
+pygame.display.set_caption("Sorting Algorithm Visualization")
 
 
 # 生產一個隨機的array
