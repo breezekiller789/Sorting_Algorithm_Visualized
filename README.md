@@ -37,4 +37,5 @@ python3 Sorting_Algo_Visualized.py
 ## Author
 
 * **Willy Huang** - *Initial work*
-
+* [My Website](https://breezekiller789.github.io/blog/)
+* [Linkedin](https://www.linkedin.com/in/jin-wei-huang-6a4105208/)
